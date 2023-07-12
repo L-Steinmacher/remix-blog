@@ -12,3 +12,4 @@ declare module 'tailwindcss-animate' {
 	}
 	export = _default
 }
+

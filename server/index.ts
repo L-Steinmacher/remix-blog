@@ -94,6 +94,7 @@ app.use(
 		crossOriginEmbedderPolicy: false,
 		contentSecurityPolicy: {
 			directives: {
+				...helmet.contentSecurityPolicy.getDefaultDirectives(),
 				'connect-src': [
 					MODE === 'development' ? 'ws:' : null,
 					process.env.SENTRY_DSN ? '*.ingest.sentry.io' : null,
@@ -104,14 +105,15 @@ app.use(
 				'img-src': ["'self'", 'data:'],
 				'script-src': [
 					"'strict-dynamic'",
+					"'unsafe-eval'",
 					"'self'",
-					// @ts-expect-error
 					(_, res) => `'nonce-${res.locals.cspNonce}'`,
 				],
 				'script-src-attr': [
-					// @ts-expect-error
-					(_, res) => `'nonce-${res.locals.cspNonce}'`,
+					// (_, res) => `'nonce-${res.locals.cspNonce}'`,
+					"'unsafe-inline'",
 				],
+				'style-src': ["'self'", (req, res) => `'nonce-${res.locals.cspNonce}'`],
 				'upgrade-insecure-requests': null,
 			},
 		},

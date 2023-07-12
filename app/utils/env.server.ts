@@ -37,7 +37,6 @@ export function init() {
  */
 export function getEnv() {
 	invariant(process.env.NODE_ENV, 'NODE_ENV should be defined')
-
 	return {
 		MODE: process.env.NODE_ENV,
 		SENTRY_DSN: process.env.SENTRY_DSN,
